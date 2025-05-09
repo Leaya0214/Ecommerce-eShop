@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Product;
+use App\Models\Backend\Category;
 use App\Models\Frontend\AddtoCart;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Backend\Cupon;
@@ -44,6 +45,7 @@ class AddtoCartController extends Controller
                 "name"=>$product->product_name,
                 "quantity"=>1,
                 "price"=>$product->product_price,
+                "discount"=>$product->discount ?? 0,
                 "image"=>$product->thumbnails
             ];
         }
@@ -83,7 +85,9 @@ class AddtoCartController extends Controller
         if(!$items){
             return redirect()->route('home')->with("error","Your cart is empty");
         }
-        return view("frontend.pages.viewcart", compact("items"));
+        $categories = Category::Where("status",1)->get();
+
+        return view("frontend.pages.viewcart", compact("items","categories"));
     }
     public function coupon($coupon){
         $items = Cupon::where("cupon_code", $coupon)->first();

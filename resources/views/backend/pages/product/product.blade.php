@@ -1,6 +1,6 @@
-@extends('backend/template/template')
+@extends('backend.template.layout')
 @section('content')
-      
+
  <div class="col-md-6 offset-1">
     <span class="msg text-success"></span>
 

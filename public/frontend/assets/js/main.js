@@ -1037,28 +1037,35 @@ jQuery(document).ready(function(){
             success:function(res){
                 console.log(res);
                 var data="";
-                const assetBase = "{{ asset('backend/product') }}";
+                let tDis = 0;
+                const assetBase = "{{ asset('backend/product/') }}";
                 var vat, dis,subtotal=0;
                 $.each(res.items, function(key, item){
                     subtotal += item.price;
-                    data +='<li>\
-                    <div class="item_image">\
-                        <img src=" '+ assetBase + '/' + item.image +'" alt="image_not_found">\
-                    </div>\
-                    <div class="item_content">\
-                        <h4 class="item_title">'+item.name+'</h4>\
-                        <span class="item_price">$'+item.price+'</span>\
-                    </div>\
-                    <button type="button" value="'+item.id+'" class="remove_btn"><i class="fal fa-trash-alt"></i></button>\
-                </li>';
+                    data += `
+                    <li>
+                        <div class="item_image">
+                            <img src="/backend/product/${item.image}" alt="image_not_found">
+                        </div>
+                        <div class="item_content">
+                            <h4 class="item_title">${item.name}</h4>
+                            <span class="item_price">৳${item.price}</span>
+                        </div>
+                        <button type="button" value="${item.id}" class="remove_btn">
+                            <i class="fal fa-trash-alt"></i>
+                        </button>
+                    </li>
+                `;
+
+                tDis += item.discount;
                 });
-                vat = (subtotal * (5/100));
-                dis =(subtotal * (20/100));
+                vat = (subtotal * (2/100));
+                dis =(subtotal * (tDis/100));
                 var total = ((subtotal)-(vat+dis));
-                jQuery(".subtotal").text("$"+subtotal);
-                jQuery(".vat").html("$"+vat);
-                jQuery(".dis").html("$"+dis);
-                jQuery(".total").html("$"+total);
+                jQuery(".subtotal").text("৳"+subtotal);
+                jQuery(".vat").html("৳"+vat);
+                jQuery(".dis").html("৳"+dis);
+                jQuery(".total").html("৳"+total);
                 jQuery(".cart_items_list").html(data);
             }
 

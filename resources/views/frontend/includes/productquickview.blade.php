@@ -41,7 +41,7 @@
                                                 
                                                 
                                                 <div class="quantity_wrap">
-                                                    <form action="#">
+                                                    {{-- <form action="#">
                                                         <div class="quantity_input">
                                                             <button type="button" class="input_number_decrement">
                                                                 <i class="fal fa-minus"></i>
@@ -51,16 +51,16 @@
                                                                 <i class="fal fa-plus"></i>
                                                             </button>
                                                         </div>
-                                                    </form>
+                                                    </form> --}}
                                                     <div class="total_price" >
                                                         Total: <span id="modal-show-product-price"></span>
                                                     </div>
                                                 </div>
                                                 
                                                 <ul class="default_btns_group ul_li">
-                                                    <li><a class="addtocart_btn" href="#!">Add To Cart</a></li>
+                                                    {{-- <li><a class="addtocart_btn" href="#!">Add To Cart</a></li>
                                                     <li><a href="#!"><i class="far fa-compress-alt"></i></a></li>
-                                                    <li><a href="#!"><i class="fas fa-heart"></i></a></li>
+                                                    <li><a href="#!"><i class="fas fa-heart"></i></a></li> --}}
                                                 </ul>
                                                 
                                                 
