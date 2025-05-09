@@ -994,6 +994,7 @@ jQuery(document).ready(function(){
             dataType:"JSON",
             Type:"GET",
             success:function(res){
+                console.log(res);
                 jQuery(".cart_counter").text(res.items);
             }
 
@@ -1034,13 +1035,15 @@ jQuery(document).ready(function(){
             dataType:"JSON",
             Type:"GET",
             success:function(res){
+                console.log(res);
                 var data="";
+                const assetBase = "{{ asset('backend/product') }}";
                 var vat, dis,subtotal=0;
                 $.each(res.items, function(key, item){
                     subtotal += item.price;
                     data +='<li>\
                     <div class="item_image">\
-                        <img src="http://127.0.0.1:8000/backend/product/'+item.image+'" alt="image_not_found">\
+                        <img src=" '+ assetBase + '/' + item.image +'" alt="image_not_found">\
                     </div>\
                     <div class="item_content">\
                         <h4 class="item_title">'+item.name+'</h4>\
@@ -1062,13 +1065,14 @@ jQuery(document).ready(function(){
         })
     }
 
-    jQuery(".btnaddtoCart").click(function(){
-        var id =jQuery(this).val();
+    $(".btnaddtoCart").click(function(){
+        var id =$(this).val();
         $.ajax({
             url:"/addtocart/"+id,
             dataType:"JSON",
             Type:"GET",
             success:function(res){
+                console.log(res);
                 showcartItems();
                 showitem();
                 alert("Added Product");

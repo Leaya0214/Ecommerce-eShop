@@ -12,8 +12,9 @@ use File;
 class SliderController extends Controller
 {
     public function add(){
-        return view('backend/pages/slider/addslider');
+        return view('backend.pages.slider.addslider');
     }
+    
     public function store(Request $request){
      
         if ($request->image) {
@@ -74,6 +75,12 @@ class SliderController extends Controller
                 $location = public_path('backend/slider/'.$customName);
                 Image::make($images)->save($location);
                 $slider->image =$customName ;
+            }else{
+                $images = $request->file('image');
+                $customName = rand().".".$images->getClientOriginalExtension();
+                $location = public_path('backend/slider/'.$customName);
+                Image::make($images)->save($location);
+                $slider->image =$customName ;
             }
            
            
@@ -83,6 +90,7 @@ class SliderController extends Controller
             $slider->description = $request->description;
             $slider->link = $request->link;
             $slider->status = $request->status;
+            // dd($slider);
             $slider->update();
           
             

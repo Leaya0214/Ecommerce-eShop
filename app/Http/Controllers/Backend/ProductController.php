@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Backend\Product;
+use App\Models\Backend\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -14,7 +15,8 @@ class ProductController extends Controller
 {
          function productview(){
 
-            return view('backend.pages.product.product');
+            $categories=Category::all();
+            return view('backend.pages.product.product',compact('categories'));
          }
 
          function addproduct(Request $request){
@@ -43,8 +45,8 @@ class ProductController extends Controller
 
             $product =new Product;
             $product->vendor_id=1;
-            $product->cat_id=1;
-            $product->subcat_id=1;
+            $product->cat_id=$request->category_id;
+            // $product->subcat_id=1;
             $product->product_name=$request->product_name;
             $product->product_price=$request->product_price;
             $product->discount=$request->discount;

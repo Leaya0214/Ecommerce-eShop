@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function dashboard(){
-        if(Auth::user()->role==3){
+        if(Auth::user()->role == 3){
             return redirect()->route("home");
         }
         else{

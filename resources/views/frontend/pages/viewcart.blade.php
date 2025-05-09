@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>Stowaa -  Ecommerce HTML Template</title>
-    <link rel="shortcut icon" href="{{ asset('frontend') }}/assets/images/logo/favourite_icon_1.png">
+    <title>eShop -  Ecommerce HTML Template</title>
+    <link rel="shortcut icon" href="{{ asset('frontend') }}/assets/images/logo/favicon.png">
 
     <!-- fraimwork - css include -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/bootstrap.min.css">
@@ -315,31 +315,31 @@
                                 ?>
                               @foreach($items as $item)
                                 <?php 
-                                    $subtotal +=($item->price * $item->quantity) 
-                                
+                                    $subtotal +=($item['price'] * $item['quantity']); 
+
                                 ?>
                                 <tr>
                                     <td>
                                         <div class="cart_product">
-                                            <img src="{{ asset('backend/product/'.$item->image) }}" alt="image_not_found">
-                                            <h3><a href="shop_details.html">{{$item->name}}</a></h3>
+                                            <img src="{{ asset('backend/product/'.$item['image']) }}" alt="image_not_found">
+                                            <h3><a href="shop_details.html">{{$item['name']}}</a></h3>
                                         </div>
                                     </td>
-                                    <td class="text-center"><span class="price_text">${{ $item->price }}</span></td>
+                                    <td class="text-center"><span class="price_text">${{ $item['name'] }}</span></td>
                                     <td class="text-center">
                                         <form action="#">
                                             <div class="quantity_input">
                                                 <button type="button" class="input_number_decrement">
                                                     <i class="fal fa-minus"></i>
                                                 </button>
-                                                <input class="input_number_2" type="text" value="{{$item->quantity}}">
+                                                <input class="input_number_2" type="text" value="{{$item['quantity']}}">
                                                 <button type="button" class="input_number_increment">
                                                     <i class="fal fa-plus"></i>
                                                 </button>
                                             </div>
                                         </form>
                                     </td>
-                                    <td class="text-center"><span class="price_text">${{ $item->price }}</span></td>
+                                    <td class="text-center"><span class="price_text">${{ $item['price'] }}</span></td>
                                     <td class="text-center"><button type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button></td>
                                 </tr>
                               @endforeach
@@ -528,7 +528,7 @@
                     <div class="row align-items-center">
                         <div class="col col-md-6">
                             <p class="copyright_text">
-                                ©2021 <a href="#!">stowaa</a>. All Rights Reserved.
+                                ©2021 <a href="#!">eShop</a>. All Rights Reserved.
                             </p>
                         </div>
                         

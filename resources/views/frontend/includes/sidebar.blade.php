@@ -6,8 +6,6 @@
                     
                     <ul class="cart_items_list ul_li_block mb_30 clearfix">
                         
-                        
-                        
                     </ul>
 
                     <ul class="total_price ul_li_block mb_30 clearfix">

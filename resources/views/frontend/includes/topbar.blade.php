@@ -1,53 +1,65 @@
  <!-- header_section - start
         ================================================== -->
         <header class="header_section header-style-no-collapse">
-            <div class="header_top">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col col-md-6">
-                            <ul class="header_select_options ul_li">
-                                <li>
-                                    <div class="select_option">
-                                        <div class="flug_wrap">
-                                            <img src="{{ asset('frontend') }}/assets/images/flug/flug_uk.png" alt="image_not_found">
-                                        </div>
-                                        <select>
-                                            <option data-display="Select Option">Select Your Language</option>
-                                            <option value="1" selected>English</option>
-                                            <option value="2">Bangla</option>
-                                            <option value="3" disabled>Arabic</option>
-                                            <option value="4">Hebrew</option>
-                                        </select>
-                                    </div>
-                                </li>
-                                
-                            </ul>
+         <div class="header_top">
+            <div class="container">
+                <div class="row align-items-center">
+                   <!-- Left Side: Shop Info -->
+                    <div class="col col-md-6">
+                        <div class="d-flex align-items-center">
+                            <!-- Logo -->
+                            {{-- <div class="brand_logo me-3">
+                                <a class="brand_link" href="{{ url('/') }}">
+                                    <img src="{{ asset('frontend/assets/images/logo/logo1.png') }}" 
+                                        alt="Logo" 
+                                        style="height: 70px; width: 70px;">
+                                </a>
+                            </div> --}}
+                            <!-- Shop Name & Tagline -->
+                            <div class="shop_info text-white">
+                                <p style="margin-top: 5px" class="text-white"> Welcome to <strong>eShop</strong></small>
+                            </div>
                         </div>
-                        <div class="col col-md-6">
-                            <p class="header_hotline">Call us toll free: <strong>+1888 234 5678</strong></p>
-                        </div>
+                    </div>
+
+                    <!-- Right Side: Contact Info -->
+                    <div class="col col-md-6 text-md-end">
+                        <p class="header_hotline mb-0 text-white">
+                            📞 Customer Support: <strong>+880 1700 123 456</strong><br>
+                            ✉️ Email: <strong>support@eshop.com</strong>
+                        </p>
                     </div>
                 </div>
             </div>
-
+        </div>
             <div class="header_middle">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col col-lg-3 col-md-3 col-sm-12">
-                            <div class="brand_logo">
-                                <a class="brand_link" href="index.html">
-                                    <img src="{{ asset('frontend') }}/assets/images/logo/logo_1x.png" srcset="{{ asset('frontend') }}/assets/images/logo/logo_2x.png 2x" alt>
+                            <div class="d-flex align-items-center">
+                            <!-- Logo -->
+                            {{-- <div class="brand_logo me-3">
+                                <a class="brand_link" href="{{ url('/') }}">
+                                    <img src="{{ asset('frontend/assets/images/logo/logo1.png') }}" 
+                                        alt="Logo" 
+                                        style="height: 70px; width: 70px;">
                                 </a>
+                            </div> --}}
+                            <!-- Shop Name & Tagline -->
+                            <div class="shop_info">
+                                <h5 class="mb-0 fw-bold">eShop</h5>
+                                <small class="">  <strong>eShop</strong> – Your trusted online store.</small>
                             </div>
                         </div>
+                        </div>
                         <div class="col col-lg-6 col-md-6 col-sm-12">
-                            <form action="#">
+                            <form action="{{ route('category-search') }}" method="GET">
                                 <div class="advance_serach">
                                     <div class="select_option mb-0 clearfix">
                                         <select>
                                             <option data-display="All Categories">Select A Category</option>
                                             @foreach($categories as $categorie)
-                                            <option value="1">{{$categorie->name}}</option>
+                                                <option value="1">{{$categorie->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

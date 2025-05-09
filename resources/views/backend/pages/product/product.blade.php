@@ -1,132 +1,115 @@
 @extends('backend/template/template')
 @section('content')
       
- 
-    <div class="col-md-6 offset-1">
-      <span class="msg text-success"></span>
-      @if(session()->has('message'))
-    <div class="alert alert-success">
-        {{ session()->get('message') }}
-    </div>
-     @endif
+ <div class="col-md-6 offset-1">
+    <span class="msg text-success"></span>
 
-     <form id="" method="POST" action="{{Route('addproduct')}}" enctype="multipart/form-data"
-     >
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
 
-         @csrf
+    <form method="POST" action="{{ route('addproduct') }}" enctype="multipart/form-data">
+        @csrf
 
-         @error('product_name')
+        {{-- Product Name --}}
+        @error('product_name')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="text" name="product_name" class="mt-3 form-control" placeholder="Enter Product Name">
+        <span class="product_name text-danger"></span>
 
-         <div class="alert alert-danger">
+        {{-- Product Code --}}
+        @error('product_code')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="number" name="product_code" class="mt-3 form-control" placeholder="Enter Product Code">
+        <span class="product_code text-danger"></span>
 
-             {{$message}}
-         </div>
-             
-         @enderror
+        {{-- Product Price --}}
+        @error('product_price')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="number" name="product_price" step="0.01" class="mt-3 form-control" placeholder="Enter Product Price">
+        <span class="product_price text-danger"></span>
 
-   <input type="text" name="product_name" class="mt-3 form-control name" placeholder="Enter Product name">
-   <span class="product_name text-danger"></span>
+        {{-- Discount --}}
+        @error('discount')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="number" name="discount" step="0.01" class="mt-3 form-control" placeholder="Enter Product Discount (%)">
+        <span class="discount text-danger"></span>
 
-   @error('product_code')
+        {{-- Discounted Price --}}
+        @error('discount_price')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="number" name="discount_price" step="0.01" class="mt-3 form-control" placeholder="Discounted Price">
+        <span class="discount_price text-danger"></span>
 
-         <div class="alert alert-danger">
+        {{-- Product Category --}}
+        @error('category_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <select name="category_id" class="mt-3 form-control">
+            <option value="">-----Select Category-----</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+        <span class="product_category text-danger"></span>
 
-             {{$message}}
-         </div>
-             
-         @enderror
+        {{-- Product Rating --}}
+        @error('product_rating')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="number" name="product_rating" min="1" max="5" class="mt-3 form-control" placeholder="Enter Product Rating (1-5)">
+        <span class="product_rating text-danger"></span>
 
-   <input type="number" name="product_code" class="mt-3 form-control name" placeholder="Enter Product Code">
-   <span class="Product_code text-danger"></span>
+        {{-- Short Description --}}
+        @error('short_description')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="text" name="short_description" class="mt-3 form-control" placeholder="Enter Product Short Description">
+        <span class="short_description text-danger"></span>
 
-   @error('product_price')
+        {{-- Long Description --}}
+        @error('long_description')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="text" name="long_description" class="mt-3 form-control" placeholder="Enter Product Long Description">
+        <span class="long_description text-danger"></span>
 
-   <div class="alert alert-danger">
+        {{-- Product Image --}}
+        @error('image')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="file" name="image" class="mt-3 form-control">
+        <span class="error_image text-danger"></span>
 
-       {{$message}}
-   </div>
-       
-   @enderror
-  
+        {{-- Quantity --}}
+        @error('quantity')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <input type="number" name="quantity" class="mt-3 form-control" placeholder="Enter Quantity">
+        <span class="quantity text-danger"></span>
 
-   
-   <input type="number" name="product_price" class="mt-3 form-control name" placeholder="Enter Product price">
-   <span class="product_price text-danger"></span>
+        {{-- Status --}}
+        @error('status')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <select class="mt-3 form-control" name="status">
+            <option value="">-----Select Status-----</option>
+            <option value="1">Active</option>
+            <option value="2">Inactive</option>
+        </select>
+        <span class="error_status text-danger"></span>
 
-   
-   
-   <input type="number" name="discount" class="mt-3 form-control name" placeholder="Enter Product Discount">
-   <span class="discount text-danger"></span>
+        <button type="submit" class="form-control mt-3 btn btn-success">Save</button>
+    </form>
+</div>
 
-   <input type="number" name="discount_price" class="mt-3 form-control name" placeholder="Discount  price">
-   <span class="discount_price text-danger"></span>
-
-   @error('short_description')
-
-   <div class="alert alert-danger">
-
-       {{$message}}
-   </div>
-       
-   @enderror
-
- 
-
-   <input type="text" name="short_description" class="mt-3 form-control name" placeholder="Enter Product Short Description">
-   <span class="short_description text-danger"></span>
-
-   
-   <input type="text" name="long_description" class="mt-3 form-control name" placeholder="Enter Product Long Description">
-   <span class="long_description text-danger"></span>
-
-   @error('image')
-
-   <div class="alert alert-danger">
-
-       {{$message}}
-   </div>
-       
-   @enderror
- 
-   
-     <input type="file" name="image" class="mt-3 form-control image">
-     <span class="error_image text-danger"></span>
-
-     @error('quantity')
-
-   <div class="alert alert-danger">
-
-       {{$message}}
-   </div>
-       
-   @enderror
- 
-
-     <input type="number" name="quantity" class="mt-3 form-control name" placeholder="Enter Quantity">
-     <span class="quantity text-danger"></span>
-
-     @error('status')
-
-     <div class="alert alert-danger">
-
-         {{$message}}
-     </div>
-         
-     @enderror
-      
-     <select class="mt-3 form-control " name="status">
-         <option value="">-----Select Status-----</option>
-       
-        <option value="1"> Active</option>
-        <option value="2"> Inactive</option> 
-     </select>
-
-     <span class="error_status text-danger"></span>
-
-       <button  class="form-control mt-3 btn-purchaseAdd btn btn-success"> Save </button>
-
-     </form>
-   </div>
 
       @endsection
 

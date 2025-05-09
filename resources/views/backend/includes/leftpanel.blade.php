@@ -27,8 +27,7 @@
           <span class="menu-item-label">Slider</span>
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
-          <li class="sub-item"><a href="{{route('slider.add')}}" class="sub-link">Add Slider</a></li>
-          <li class="sub-item"><a href="{{route('slider.show')}}" class="sub-link">Manage Slider</a></li>
+          {{-- <li class="sub-item"><a href="{{route('slider.add')}}" class="sub-link">Add Slider</a></li> --}}
         </ul>
       </li>
       <li class="br-menu-item">
@@ -80,6 +79,16 @@
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
           <li class="sub-item"><a href="{{route('add')}}" class="sub-link">Add Cupon </a></li>
+        </ul>
+      </li>
+      <li class="br-menu-item">
+        <a href="#" class="br-menu-link with-sub">
+          <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
+          <span class="menu-item-label">Website Setup</span>
+        </a><!-- br-menu-link -->
+        <ul class="br-menu-sub">
+          <li class="sub-item"><a href="{{route('slider.show')}}" class="sub-link">Slider</a></li>
+          <li class="sub-item"><a href="{{route('add')}}" class="sub-link">Slider</a></li>
         </ul>
       </li>
 

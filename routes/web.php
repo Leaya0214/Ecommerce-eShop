@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CuponController;
 use App\Http\Controllers\Frontend\Home;
 use App\Http\Controllers\Frontend\AddtoCartController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SslCommerzPaymentController;
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ Route::get('/removeitem/{id}',[AddtoCartController::class,'removeitem']);
 Route::get('/viewcart',[AddtoCartController::class,'viewcart'])->name("viewcart");
 Route::get('/coupon/{coupon}',[AddtoCartController::class,'coupon']);
 
-Route::get('/dashboard',[DashboardController::class,'dashboard'])->middleware(['auth','verified'])->name('dashboard');
+Route::get('/dashboard',[DashboardController::class,'dashboard'])->middleware(['auth'])->name('dashboard');
 
 // Route::get('/dashboard', function () {
 //     return view('backend/dashboard');
@@ -61,6 +62,8 @@ Route::group(['prefix'=>'/vendor'],function(){
     Route::post('/update/{id}',[VendorController::class,'update']);
 });
 
+
+
 // Route for Slider
 Route::group(['prefix' => '/slider'],function(){
     Route::get('/addSlider',[SliderController::class,'add'])->name('slider.add');
@@ -76,6 +79,15 @@ Route::group(['prefix' => '/slider'],function(){
     Route::get('/multi}',[SliderController::class,'multiAdd'])->name('slider.multi');
     Route::POST('/multiStore}',[SliderController::class,'multiStore'])->name('multi.store');
     
+});
+
+//Route for Section
+
+Route::group(['prefix' => '/section'],function(){
+    Route::get('/index', [SectionController::class,'index'])->name('section.index');
+    Route::post('/store', [SectionController::class,'store'])->name('section.store');
+    Route::post('/update', [SectionController::class,'update'])->name('section.update');
+    Route::post('/status/{id}', [SectionController::class,'statusUpdate'])->name('section.status.update');
 });
 // Route for Category
 

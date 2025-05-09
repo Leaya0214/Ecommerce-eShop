@@ -1,4 +1,4 @@
-<link rel="shortcut icon" href="{{ asset('frontend') }}/assets/images/logo/favourite_icon_1.png">
+<link rel="shortcut icon" href="{{ asset('frontend') }}/assets/images/logo/favicon.png">
 
 <!-- fraimwork - css include -->
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/bootstrap.min.css">
