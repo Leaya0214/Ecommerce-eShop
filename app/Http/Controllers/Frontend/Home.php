@@ -18,6 +18,7 @@ class Home extends Controller
         $categories = Category::Where("status",1)->get();
         $sliders = Slider::Where("status",1)->get();
         $products = Product::Where("status",1)->get();
-        return view("frontend.home", compact("categories","sliders","products"));
+        $latest_products = Product::Where("status",1)->orderBy('id','desc')->take(10)->get();
+        return view("frontend.home", compact("categories","sliders","products","latest_products"));
     }
 }
