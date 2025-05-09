@@ -53,7 +53,7 @@
                         </div>
                         </div>
                         <div class="col col-lg-6 col-md-6 col-sm-12">
-                            <form action="{{ route('category-search') }}" method="GET">
+                            <form action="{{ route('category.search') }}" method="GET">
                                 <div class="advance_serach">
                                     <div class="select_option mb-0 clearfix">
                                         <select>

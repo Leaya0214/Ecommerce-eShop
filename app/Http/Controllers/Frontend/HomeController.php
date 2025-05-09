@@ -16,4 +16,11 @@ class HomeController extends Controller
         $products   = Product::where('cat_id', $request->id)->get();
         return view('frontend.category_search', compact('categories'));
     }
+
+    public function quickview($id)
+    {
+        $product = Product::findOrFail($id);
+        return response()->json($product);
+    }
+
 }

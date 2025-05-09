@@ -25,7 +25,7 @@
                                                         <a href="#"><svg role="img" xmlns="http://www.w3.org/2000/svg" width="48px" height="48px" viewBox="0 0 24 24"  stroke="#2329D6" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title>Shuffle</title> <path d="M21 16.0399H17.7707C15.8164 16.0399 13.9845 14.9697 12.8611 13.1716L10.7973 9.86831C9.67384 8.07022 7.84196 7 5.88762 7L3 7"/> <path d="M21 7H17.7707C15.8164 7 13.9845 8.18388 12.8611 10.1729L10.7973 13.8271C9.67384 15.8161 7.84196 17 5.88762 17L3 17"/> <path d="M19 4L22 7L19 10"/> <path d="M19 13L22 16L19 19"/> </svg></a>
                                                     </li>
                                                     <li>
-                                                        <a class="quickview_btn" data-bs-toggle="modal" href="#quickview_popup" role="button" tabindex="0"><svg width="48px" height="48px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#2329D6" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title>Visible (eye)</title> <path d="M22 12C22 12 19 18 12 18C5 18 2 12 2 12C2 12 5 6 12 6C19 6 22 12 22 12Z"/> <circle cx="12" cy="12" r="3"/> </svg></a>
+                                                        <a class="quickview_btn" data-id="{{ $product->id }}" data-bs-toggle="modal" href="#quickview_popup" role="button" tabindex="0"><svg width="48px" height="48px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#2329D6" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title>Visible (eye)</title> <path d="M22 12C22 12 19 18 12 18C5 18 2 12 2 12C2 12 5 6 12 6C19 6 22 12 22 12Z"/> <circle cx="12" cy="12" r="3"/> </svg></a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             
-                            <div class="top_category_wrap">
+                            {{-- <div class="top_category_wrap">
                                 <div class="sec-title-link">
                                     <h3>Top categories</h3>
                                 </div>
@@ -83,7 +83,7 @@
                                     <button type="button" class="tc_left_arrow"><i class="fal fa-long-arrow-alt-left"></i></button>
                                     <button type="button" class="tc_right_arrow"><i class="fal fa-long-arrow-alt-right"></i></button>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-lg-3 order-lg-9">
                             <div class="product-sidebar">
@@ -335,4 +335,30 @@
             </section>
             <!-- products-with-sidebar-section - end
             ================================================== -->
-            
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script >
+            $(document).on('click', '.quickview_btn', function() {
+                let productId = $(this).data('id');
+                console.log("Clicked product ID:", productId);
+                // Optional: make AJAX call
+                $.get(`/product/${productId}/quickview`, function(data) {
+                        // Set data into modal
+                        $('#modal-product-name').text(data.product_name);
+                        $('#modal-product-short-description').text(data.short_description);
+                        $('#modal-product-long-description').text(data.long_description);
+                        if (data.discount_price) {
+                            $('#modal-product-discount').text(`৳${data.discount_price}`);
+                            $('#modal-product-price').text(`৳${data.product_price}`);
+                            $('#modal-show-product-price').text(`৳${data.discount_price}`);
+
+                        } else {
+                            $('#modal-product-discount').text(`৳${data.product_price}`);
+                            $('#modal-product-price').text(``);
+                            $('#modal-show-product-price').text(`৳${data.product_price}`);
+                        }
+                        // Set image
+                        $('#modal-product-image').attr('src', `/backend/product/${data.thumbnails}`);
+
+                });
+            });           
+            </script>

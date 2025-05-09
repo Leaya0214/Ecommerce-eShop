@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CuponController;
 use App\Http\Controllers\Frontend\Home;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AddtoCartController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SslCommerzPaymentController;
@@ -34,6 +35,14 @@ Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END
 
 Route::get('/',[Home::class,'index'])->name("home");
+
+//Route for search
+
+Route::get('/categorysearch',[HomeController::class,'categorySearch'])->name('category.search');
+Route::get('/productsearch',[HomeController::class,'productSearch'])->name('product.search');
+Route::get('/product/{id}/quickview', [HomeController::class, 'quickview']);
+
+
 //Route for cart
 Route::get('/addtocart/{id}',[AddtoCartController::class,'addtocart']);
 Route::get('/showcartitems',[AddtoCartController::class,'showcartitems']);

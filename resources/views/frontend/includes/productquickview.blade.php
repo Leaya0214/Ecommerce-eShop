@@ -13,15 +13,15 @@
                                     <div class="row">
                                         <div class="col col-lg-6">
                                             <div class="product_details_image p-0">
-                                                <img src="{{ asset('frontend') }}/assets/images/shop/product_img_12.png" alt>
+                                                {{-- <img src="{{ asset('frontend') }}/assets/images/shop/product_img_12.png" alt> --}}
+                                                <img id="modal-product-image" src="" alt="Product Image">
                                             </div>
                                         </div>
                                         
                                         <div class="col-lg-6">
                                             <div class="product_details_content">
-                                                <h2 class="item_title">Macbook Pro</h2>
-                                                <p>
-                                                    It is a long established fact that a reader will be distracted eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate
+                                                <h2 class="item_title" id="modal-product-name"></h2>
+                                                <p id="modal-product-short-description">
                                                 </p>
                                                 <div class="item_review">
                                                     <ul class="rating_star ul_li">
@@ -34,8 +34,8 @@
                                                     <span class="review_value">3 Rating(s)</span>
                                                 </div>
                                                 <div class="item_price">
-                                                    <span>$620.00</span>
-                                                    <del>$720.00</del>
+                                                    <span id="modal-product-discount"></span>
+                                                    <del id="modal-product-price"></del>
                                                 </div>
                                                 <hr>
                                                 
@@ -52,8 +52,8 @@
                                                             </button>
                                                         </div>
                                                     </form>
-                                                    <div class="total_price">
-                                                        Total: $620,99
+                                                    <div class="total_price" >
+                                                        Total: <span id="modal-show-product-price"></span>
                                                     </div>
                                                 </div>
                                                 
