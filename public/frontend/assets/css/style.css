@@ -4081,7 +4081,7 @@ hr {
 }
 .shop-product-area .product-area .grid {
   background: white;
-  width: calc(33.33% - 30px);
+  width: calc(25% - 30px); /* Changed from 33.33% to 25% */
   float: left;
   margin: 0 15px 45px;
   padding: 25px;
@@ -6168,7 +6168,7 @@ hr {
 }
 .product-area .grid {
   background: white;
-  width: calc(33.33% - 30px);
+  width: calc(25% - 30px);
   float: left;
   margin: 0 15px 45px;
   padding: 25px;
@@ -6885,7 +6885,7 @@ hr {
   border: 0;
 }
 .new_arrivals_section .deals_product_layout1 .bg_area {
-  background: url("../images/products/img-1.jpg") center center/cover no-repeat local;
+  /* background: url("../images/products/img-1.jpg") center center/cover no-repeat local; */
   text-align: left;
 }
 .new_arrivals_section .new-arrivals-grids {
@@ -6900,7 +6900,7 @@ hr {
 }
 .new_arrivals_section .new-arrivals-grids .grid {
   background: white;
-  width: calc(50% - 30px);
+  width: calc(25% - 30px);
   float: left;
   margin: 0 15px 25px;
   padding: 25px;
@@ -6917,7 +6917,7 @@ hr {
 }
 @media (max-width: 991px) {
   .new_arrivals_section .new-arrivals-grids .grid {
-    width: calc(33.33% - 15px);
+    width: calc(25% - 15px);
     margin: 0 7.5px 15px;
   }
 }
@@ -7072,7 +7072,7 @@ hr {
 }
 @media (max-width: 991px) {
   .best-selling-products-s2 .grid {
-    width: calc(33.33% - 15px);
+    width: calc(25% - 15px);
     margin: 0 7.5px 15px;
   }
 }
