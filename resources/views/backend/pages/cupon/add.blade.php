@@ -25,8 +25,23 @@
                 </span>
             </div>
             <div class="form-group " >
+                <label for="">Product Id</label>
+                <select name="product_id" id="product_id" class="form-control product_id">
+                    <option value="">Select Product</option>
+                    @foreach ($products as $product)
+                    <option value="{{ $product->id }}" data-product-price = "{{$product->product_price}}">{{ $product->product_name }}</option>
+                    @endforeach
+                </select>
+                <span  class="text-danger">
+                    @error('.product_id')
+                    {{ $message }}
+
+                    @enderror
+                </span>
+            </div>
+            <div class="form-group " >
                 <label for="">Cupon discount</label>
-                <input type="number" class="form-control discount" placeholder="Enter cupon discount here" id="discount">
+                <input type="number" id="discount" class="form-control discount" placeholder="Enter cupon discount here" id="discount">
                 <span  class="text-danger">
                     @error('.discount')
                     {{ $message }}
@@ -34,9 +49,10 @@
                     @enderror
                 </span>
             </div>
+
             <div class="form-group " >
                 <label for="">Cupon discount amount</label>
-                <input type="number" class="form-control discount_amount " placeholder="Enter cupon discount amount here" id="discount_amount">
+                <input type="number" id="discount_amount" class="form-control discount_amount " placeholder="Enter cupon discount amount here" id="discount_amount">
                 <span  class="text-danger">
                     @error('.discount_amount')
                     {{ $message }}
@@ -77,16 +93,7 @@
                     @enderror
                 </span>
             </div>
-            <div class="form-group " >
-                <label for="">Product Id</label>
-                <input type="number" class="form-control cupon_code product_id" placeholder="Product ID" id="product_id">
-                <span  class="text-danger">
-                    @error('.product_id')
-                    {{ $message }}
-
-                    @enderror
-                </span>
-            </div>
+            
             <button name="save" class="mt-3 btn btn-success form-control addcupon">Add Cupon</button>
        </div>
     </div>
@@ -107,7 +114,27 @@
                         </tr>
                     </thead>
                     <tbody class="alldata">
-        
+                        @foreach ($cupons as $cupon)
+                        <tr>
+                            <td>{{ $cupon->cupon_code }}</td>
+                            <td>{{ $cupon->discount }}</td>
+                            <td>{{ $cupon->discount_amount }}</td>
+                            <td>{{ $cupon->start_at }}</td>
+                            <td>{{ $cupon->end_at }}</td>
+                            <td>
+                                @if ($cupon->status==1)
+                                    Active
+                                @else
+                                    Inactive
+                                @endif
+                            </td>
+                            <td>{{ $cupon->product_id }}</td>
+                            <td>
+                                <button class="btn btn-primary edit" id="{{ $cupon->id }}">Edit</button>
+                                <button class="btn btn-danger delete" id="{{ $cupon->id }}">Delete</button>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
            
@@ -194,5 +221,31 @@
 
 
   {{-- Modal update end --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const productSelect = document.getElementById('product_id');
+    const discountInput = document.getElementById('discount');
+    const discountAmountInput = document.getElementById('discount_amount');
 
+    // Function to calculate discount
+    function calculateDiscount() {
+        const selectedProduct = productSelect.options[productSelect.selectedIndex];
+        const productPrice = parseFloat(selectedProduct.getAttribute('data-product-price')) || 0;
+        const discountPercentage = parseFloat(discountInput.value) || 0;
+
+        if (productPrice > 0 && discountPercentage >= 0 && discountPercentage <= 100) {
+            const discountAmount = (productPrice * discountPercentage) / 100;
+            const finalPrice = productPrice - discountAmount;
+
+            discountAmountInput.value = discountAmount.toFixed(2);
+        } else {
+            discountAmountInput.value = '';
+        }
+    }
+
+    // Event listeners
+    productSelect.addEventListener('change', calculateDiscount);
+    discountInput.addEventListener('input', calculateDiscount);
+});
+</script>
 @endsection

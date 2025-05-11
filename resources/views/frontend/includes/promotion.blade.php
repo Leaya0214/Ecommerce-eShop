@@ -1,6 +1,6 @@
 <!-- promotion_section - start
             ================================================== -->
-            <section class="promotion_section">
+            {{-- <section class="promotion_section">
                 <div class="container">
                     <div class="row promotion_banner_wrap">
                         <div class="col col-lg-6">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> --}}
             <!-- promotion_section - end
             ================================================== -->
             

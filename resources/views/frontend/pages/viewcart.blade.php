@@ -2,7 +2,7 @@
 @section('content')
 <section class="cart_section section_space">
     <div class="container">
-
+        @if(count($items) > 0)
         <div class="cart_table">
             <table class="table">
                 <thead>
@@ -11,44 +11,50 @@
                         <th class="text-center">Price</th>
                         <th class="text-center">Quantity</th>
                         <th class="text-center">Total</th>
-                        <th class="text-center">Remove</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    $subtotal = 0;
-                    $delivery = 20;
-                    $total = 0;
-                    ?>
+                    @php
+                        $subtotal = 0;
+                        $delivery = 20;
+                    @endphp
+                    
                     @foreach ($items as $item)
-                        <?php
-                        $subtotal += $item['price'] * $item['quantity'];
-                        
-                        ?>
+                        @php
+                            $itemTotal = $item['price'] * $item['quantity'];
+                            $subtotal += $itemTotal;
+                        @endphp
                         <tr>
                             <td>
                                 <div class="cart_product">
-                                    <img src="{{ asset('backend/product/' . $item['image']) }}" alt="image_not_found">
-                                    <h3><a href="shop_details.html">{{ $item['name'] }}</a></h3>
+                                    <img src="{{ asset('backend/product/' . $item['image']) }}" alt="{{ $item['name'] }}">
+                                    {{-- <h3><a href="{{ route('product.details', $item['id']) }}">{{ $item['name'] }}</a></h3> --}}
                                 </div>
                             </td>
-                            <td class="text-center"><span class="price_text">${{ $item['name'] }}</span></td>
+                            <td class="text-center"><span class="price_text">${{ number_format($item['price'], 2) }}</span></td>
                             <td class="text-center">
-                                <form action="#">
+                                {{-- <form action="{{ route('cart.update', $item['id']) }}" method="POST"> --}}
+                                    @csrf
                                     <div class="quantity_input">
                                         <button type="button" class="input_number_decrement">
                                             <i class="fal fa-minus"></i>
                                         </button>
-                                        <input class="input_number_2" type="text" value="{{ $item['quantity'] }}">
+                                        <input class="input_number_2" type="number" name="quantity" value="{{ $item['quantity'] }}" min="1">
                                         <button type="button" class="input_number_increment">
                                             <i class="fal fa-plus"></i>
                                         </button>
                                     </div>
-                                </form>
+                                {{-- </form> --}}
                             </td>
-                            <td class="text-center"><span class="price_text">${{ $item['price'] }}</span></td>
-                            <td class="text-center"><button type="button" class="remove_btn"><i
-                                        class="fal fa-trash-alt"></i></button></td>
+                            <td class="text-center"><span class="price_text">${{ number_format($itemTotal, 2) }}</span></td>
+                            <td class="text-center">
+                                {{-- <form action="{{ route('cart.remove', $item['id']) }}" method="POST"> --}}
+                                    {{-- @csrf
+                                    @method('DELETE') --}}
+                                    <button type="submit" class="remove_btn"><i class="fal fa-trash-alt"></i></button>
+                                {{-- </form> --}}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -58,46 +64,44 @@
         <div class="cart_btns_wrap">
             <div class="row">
                 <div class="col col-lg-6">
-                    <div class="coupon_form form_item mb-0">
-                        <input type="text" class="txtcoupon" placeholder="Coupon Code...">
-                        <button type="button" class="btnapplycoupon btn btn-dark">Apply Coupon</button>
-                        <div class="info_icon">
-                            <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="Your Info Here"></i>
+                    {{-- <form action="{{ route('coupon.apply') }}" method="POST">
+                        @csrf --}}
+                        <div class="coupon_form form_item mb-0">
+                            <input type="text" name="coupon_code" class="txtcoupon" placeholder="Coupon Code..." required>
+                            <button type="submit" class="btn btn-dark">Apply Coupon</button>
+                            <div class="info_icon">
+                                <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Enter your coupon code for discounts"></i>
+                            </div>
                         </div>
-                    </div>
+                    {{-- </form> --}}
                 </div>
 
                 <div class="col col-lg-6">
                     <ul class="btns_group ul_li_right">
-                        <li><a class="btn border_black" href="#!">Update Cart</a></li>
-                        <li><a class="btn btn_dark" href="{{ route('exampleHostedCheckout') }}">Prceed To Checkout</a>
-                        </li>
+                        <li><a class="btn border_black" href="">Continue Shopping</a></li>
+                        <li><a class="btn btn_dark" href="">Proceed To Checkout</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        majid
-        <button class="your-button-class btn btn-info" id="sslczPayBtn" token="if you have any token validation"
-            postdata="your javascript arrays or objects which requires in backend"
-            order="If you already have the transaction generated for current order" endpoint="/pay-via-ajax"> Pay Now
-        </button>
+
         <div class="row">
             <div class="col col-lg-6">
                 <div class="calculate_shipping">
-                    <h3 class="wrap_title">Calculate Shipping <span class="icon"><i
-                                class="far fa-arrow-up"></i></span></h3>
-                    <form action="#">
+                    <h3 class="wrap_title">Calculate Shipping <span class="icon"><i class="far fa-arrow-up"></i></span></h3>
+                    {{-- <form action="{{ route('shipping.calculate') }}" method="POST"> --}}
+                        {{-- @csrf --}}
                         <div class="select_option clearfix">
-                            <select>
+                            <select name="shipping_option" required>
                                 <option value="">Select Your Option</option>
-                                <option value="1">Inside City</option>
-                                <option value="2">Outside City</option>
+                                <option value="inside">Inside City ($10)</option>
+                                <option value="outside">Outside City ($20)</option>
                             </select>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn_primary rounded-pill">Update Total</button>
-                    </form>
+                        <button type="submit" class="btn btn_primary rounded-pill">Calculate Shipping</button>
+                    {{-- </form> --}}
                 </div>
             </div>
 
@@ -107,20 +111,34 @@
                     <ul class="ul_li_block">
                         <li>
                             <span>Cart Subtotal</span>
-                            <span class="cartsubtotal">{{ $subtotal }}</span>
+                            <span>${{ number_format($subtotal, 2) }}</span>
                         </li>
                         <li>
                             <span>Delivery Charge</span>
-                            <span class="delivery">{{ $delivery }}</span>
+                            <span>${{ number_format($delivery, 2) }}</span>
                         </li>
+                        @if(session('discount'))
+                        <li>
+                            <span>Discount ({{ session('coupon_code') }})</span>
+                            <span>-${{ number_format(session('discount'), 2) }}</span>
+                        </li>
+                        @endif
                         <li>
                             <span>Order Total</span>
-                            <span class="total_price">{{ $subtotal + $delivery }}</span>
+                            <span class="total_price">${{ number_format($subtotal + $delivery - (session('discount') ?? 0), 2) }}</span>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
+        @else
+        <div class="empty_cart text-center">
+            <i class="fal fa-shopping-cart fa-4x mb-4"></i>
+            <h3>Your cart is empty</h3>
+            <p>Looks like you haven't added any items to your cart yet</p>
+            {{-- <a href="{{ route('shop') }}" class="btn btn_dark mt-3">Continue Shopping</a> --}}
+        </div>
+        @endif
     </div>
 </section>
 @endsection

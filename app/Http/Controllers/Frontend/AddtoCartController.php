@@ -42,6 +42,7 @@ class AddtoCartController extends Controller
             $cart[$id]['quantity']++;
         }else{
             $cart[$id] = [
+                "id" => $product->id,
                 "name"=>$product->product_name,
                 "quantity"=>1,
                 "price"=>$product->product_price,

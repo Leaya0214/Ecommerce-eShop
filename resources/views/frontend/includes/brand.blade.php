@@ -1,38 +1,19 @@
  <!-- brand_section - start
             ================================================== -->
+            @php
+                $brands = App\Models\Brand::all();
+            @endphp
             <div class="brand_section pb-0">
                 <div class="container">
                     <div class="brand_carousel">
+                        @foreach($brands as $brand)
                         <div class="slider_item">
                             <a class="product_brand_logo" href="#!">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_1.png" alt="image_not_found">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_1.png" alt="image_not_found">
+                                <img src="{{ asset('backend') }}/brand/{{$brand->logo}}" alt="image_not_found">
+                                <img src="{{ asset('backend') }}/brand/{{$brand->logo}}" alt="image_not_found">
                             </a>
                         </div>
-                        <div class="slider_item">
-                            <a class="product_brand_logo" href="#!">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_2.png" alt="image_not_found">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_2.png" alt="image_not_found">
-                            </a>
-                        </div>
-                        <div class="slider_item">
-                            <a class="product_brand_logo" href="#!">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_3.png" alt="image_not_found">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_3.png" alt="image_not_found">
-                            </a>
-                        </div>
-                        <div class="slider_item">
-                            <a class="product_brand_logo" href="#!">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_4.png" alt="image_not_found">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_4.png" alt="image_not_found">
-                            </a>
-                        </div>
-                        <div class="slider_item">
-                            <a class="product_brand_logo" href="#!">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_5.png" alt="image_not_found">
-                                <img src="{{ asset('frontend') }}/assets/images/brand/brand_5.png" alt="image_not_found">
-                            </a>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

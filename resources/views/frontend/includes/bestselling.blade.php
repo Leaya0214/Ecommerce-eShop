@@ -63,7 +63,7 @@
             <section class="products-with-sidebar-section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-9 order-lg-3">
+                        <div class="col-lg-12 order-lg-4">
                             <div class="best-selling-products">
                                 <div class="sec-title-link">
                                     <h3>Best selling</h3>
@@ -145,7 +145,7 @@
                                 </div>
                             </div> --}}
                         </div>
-                        <div class="col-lg-3 order-lg-9">
+                        {{-- <div class="col-lg-3 order-lg-9">
                             <div class="product-sidebar">
                                 <div class="widget latest_product_carousel">
                                     <div class="title_wrap">
@@ -211,7 +211,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div> <!-- end container  -->
             </section>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Cupon;
-
+use App\Models\Backend\Product;
 
 class CuponController extends Controller
 {
@@ -16,7 +16,9 @@ class CuponController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.cupon.add');
+        $products = Product::all();
+        $cupons = Cupon::all();
+        return view('backend.pages.cupon.add',compact('products','cupons'));
     }
 
     /**
@@ -37,6 +39,7 @@ class CuponController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
 
         $cupon = new Cupon;
         $cupon->cupon_code = $request->cupon_code;

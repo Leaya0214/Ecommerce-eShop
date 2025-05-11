@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\Home;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AddtoCartController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\SslCommerzPaymentController;
 /*
 |--------------------------------------------------------------------------
@@ -154,3 +155,6 @@ Route::group(['prefix'=>'/cupon'],function() {
     Route::post('/update/{id}',[CuponController::class,'update'])->name('update');
 
 });
+
+Route::get('/brand',[BrandController::class,'index'])->name('brand.index');
+Route::post('/brand/store',[BrandController::class,'store'])->name('brand.store');
