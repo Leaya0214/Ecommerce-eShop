@@ -13,8 +13,8 @@ use App\Models\Backend\Product;
 class Home extends Controller
 {
     public function index(){
-        session()->forget('cart');
-        session()->forget('coupon');
+        // session()->forget('cart');
+        // session()->forget('coupon');
         $categories = Category::Where("status",1)->get();
         $sliders = Slider::Where("status",1)->get();
         $products = Product::Where("status",1)->get();

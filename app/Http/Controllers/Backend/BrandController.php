@@ -14,6 +14,7 @@ class BrandController extends Controller
     public function index(){
         $brands = Brand::all();
         return view('backend.brand.index',compact('brands'));
+
     }
 
     public function store(Request $request){
@@ -56,10 +57,7 @@ class BrandController extends Controller
             'slug' => Str::slug($request->name),
         ];
 
-        Brand::create($data);
-
-        // Update the brand
-        // ...
+        Brand::update($data);
 
         return redirect()->route('backend.brand.index')->with('success', 'Brand updated successfully.');
     }

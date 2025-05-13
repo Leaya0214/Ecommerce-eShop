@@ -29,25 +29,24 @@
                             <td>
                                 <div class="cart_product">
                                     <img src="{{ asset('backend/product/' . $item['image']) }}" alt="{{ $item['name'] }}">
-                                    {{-- <h3><a href="{{ route('product.details', $item['id']) }}">{{ $item['name'] }}</a></h3> --}}
                                 </div>
                             </td>
-                            <td class="text-center"><span class="price_text">${{ number_format($item['price'], 2) }}</span></td>
+                            <td class="text-center"><span class="price_text">৳{{ number_format($item['price'], 2) }}</span></td>
                             <td class="text-center">
                                 {{-- <form action="{{ route('cart.update', $item['id']) }}" method="POST"> --}}
-                                    @csrf
+                                    {{-- @csrf --}}
                                     <div class="quantity_input">
-                                        <button type="button" class="input_number_decrement">
+                                        <button type="button" id="input_number_decrement-{{$item['id']}}" class="" data-id="{{$item['id']}}">
                                             <i class="fal fa-minus"></i>
                                         </button>
-                                        <input class="input_number_2" type="number" name="quantity" value="{{ $item['quantity'] }}" min="1">
-                                        <button type="button" class="input_number_increment">
+                                        <input class="" id="input_number_2-{{$item['id']}}" type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" data-id="{{ $item['id'] }}">
+                                        <button type="button" id="input_number_increment-{{$item['id']}}" class="" data-id="{{$item['id']}}">
                                             <i class="fal fa-plus"></i>
                                         </button>
                                     </div>
                                 {{-- </form> --}}
                             </td>
-                            <td class="text-center"><span class="price_text">${{ number_format($itemTotal, 2) }}</span></td>
+                            <td class="text-center"><span id="item-total-{{$item['id']}}" class="price_text">৳{{ number_format($itemTotal, 2) }}</span></td>
                             <td class="text-center">
                                 {{-- <form action="{{ route('cart.remove', $item['id']) }}" method="POST"> --}}
                                     {{-- @csrf
@@ -61,7 +60,52 @@
             </table>
         </div>
 
-        <div class="cart_btns_wrap">
+        <div class="row">
+            <div class="col col-lg-6">
+                <div class="calculate_shipping">
+                    <h3 class="wrap_title">Select One <span class="icon"><i class="far fa-arrow-up"></i></span></h3>
+                    {{-- <form action="{{ route('shipping.calculate') }}" method="POST"> --}}
+                        {{-- @csrf --}}
+                        <div class="select_option clearfix">
+                            <select name="shipping_option" required onchange="deliveryCharge(this.value)">
+                                <option value="">Select Your Option</option>
+                                <option value="40">Inside City (৳40)</option>
+                                <option value="100">Outside City (৳100)</option>
+                            </select>
+                        </div>
+                        <br>
+                        {{-- <button type="submit" class="btn btn_primary rounded-pill">Calculate Shipping</button> --}}
+                    {{-- </form> --}}
+                </div>
+            </div>
+
+            <div class="col col-lg-6">
+                <div class="cart_total_table">
+                    <h3 class="wrap_title">Cart Totals</h3>
+                    <ul class="ul_li_block">
+                        <li>
+                            <span>Cart Subtotal</span>
+                            <span id="cart-subtotal">৳{{ number_format($subtotal, 2) }}</span>
+                        </li>
+                        <li>
+                            <span>Delivery Charge</span>
+                            <span id="delivery-charge">৳ 0</span>
+                        </li>
+                        @if(session('discount'))
+                        <li>
+                            <span>Discount ({{ session('coupon_code') }})</span>
+                            <span>-৳{{ number_format(session('discount'), 2) }}</span>
+                        </li>
+                        @endif
+                        <li>
+                            <span>Order Total</span>
+                            <span class="total_price">৳{{ number_format($subtotal - (session('discount') ?? 0), 2) }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+             <div class="cart_btns_wrap">
             <div class="row">
                 <div class="col col-lg-6">
                     {{-- <form action="{{ route('coupon.apply') }}" method="POST">
@@ -79,54 +123,8 @@
 
                 <div class="col col-lg-6">
                     <ul class="btns_group ul_li_right">
-                        <li><a class="btn border_black" href="">Continue Shopping</a></li>
+                        <li><a class="btn border_black" href="{{url('/')}}">Continue Shopping</a></li>
                         <li><a class="btn btn_dark" href="">Proceed To Checkout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col col-lg-6">
-                <div class="calculate_shipping">
-                    <h3 class="wrap_title">Calculate Shipping <span class="icon"><i class="far fa-arrow-up"></i></span></h3>
-                    {{-- <form action="{{ route('shipping.calculate') }}" method="POST"> --}}
-                        {{-- @csrf --}}
-                        <div class="select_option clearfix">
-                            <select name="shipping_option" required>
-                                <option value="">Select Your Option</option>
-                                <option value="inside">Inside City ($10)</option>
-                                <option value="outside">Outside City ($20)</option>
-                            </select>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn_primary rounded-pill">Calculate Shipping</button>
-                    {{-- </form> --}}
-                </div>
-            </div>
-
-            <div class="col col-lg-6">
-                <div class="cart_total_table">
-                    <h3 class="wrap_title">Cart Totals</h3>
-                    <ul class="ul_li_block">
-                        <li>
-                            <span>Cart Subtotal</span>
-                            <span>${{ number_format($subtotal, 2) }}</span>
-                        </li>
-                        <li>
-                            <span>Delivery Charge</span>
-                            <span>${{ number_format($delivery, 2) }}</span>
-                        </li>
-                        @if(session('discount'))
-                        <li>
-                            <span>Discount ({{ session('coupon_code') }})</span>
-                            <span>-${{ number_format(session('discount'), 2) }}</span>
-                        </li>
-                        @endif
-                        <li>
-                            <span>Order Total</span>
-                            <span class="total_price">${{ number_format($subtotal + $delivery - (session('discount') ?? 0), 2) }}</span>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -140,5 +138,75 @@
         </div>
         @endif
     </div>
+
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function deliveryCharge(value){
+        let charge = parseInt(value);
+        let deliveryCharge = charge;
+        let subtotal = parseInt($('#cart-subtotal').text().replace('৳', '').replace(',', ''));
+        let total = subtotal + deliveryCharge;
+        console.log(subtotal);
+        
+        $('#delivery-charge').text(deliveryCharge);
+        $('.total_price').text('৳' + total);
+    }
+    $(document).ready(function () {
+        // Increment button click
+        $('[id^="input_number_increment-"]').on('click', function () {
+            const id = $(this).data('id');
+            const input = $('#input_number_2-' + id);
+            let quantity = parseInt(input.val()) || 1;
+            quantity++;
+            input.val(quantity);
+            updateCart(id, quantity);
+        });
+
+        // Decrement button click
+        $('[id^="input_number_decrement-"]').on('click', function () {
+            const id = $(this).data('id');
+            const input = $('#input_number_2-' + id);
+            let quantity = parseInt(input.val()) || 1;
+            if (quantity > 1) {
+                quantity--;
+                input.val(quantity);
+                updateCart(id, quantity);
+            }
+        });
+
+        // On manual quantity change
+        $('[id^="input_number_2-"]').on('change', function () {
+            const id = $(this).data('id');
+            let quantity = parseInt($(this).val()) || 1;
+            if (quantity < 1) quantity = 1;
+            $(this).val(quantity);
+            updateCart(id, quantity);
+        });
+
+        function updateCart(id, quantity) {
+            $.ajax({
+                url: '{{ route("update.cart") }}', // Make sure this route exists
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    console.log(response);
+                    
+                     $('#item-total-' + id).text(response.itemTotal);
+                    // Update subtotal
+                    $('#cart-subtotal').text('৳' + response.subTotal);
+                },
+                error: function () {
+                    alert('Cart update failed.');
+                }
+            });
+        }
+    });
+</script>
+
 @endsection

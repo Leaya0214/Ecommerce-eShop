@@ -96,4 +96,24 @@ class AddtoCartController extends Controller
             "data"=>$items
         ]);
     }
+
+
+    public function updatecart(Request $request){
+        $cart = session()->get('cart');
+        if(isset($cart[$request->id])){
+            $cart[$request->id]['quantity'] = $request->quantity;
+        }
+        session()->put('cart',$cart);
+        $item = $cart[$request->id];
+        $item['total'] = $item['quantity'] * $item['price'];
+        $subtotal = 0;
+        foreach($cart as $key =>$value){
+            $subtotal += $value['quantity'] * $value['price'];
+        }
+         return response()->json([
+            "status"=>"success",
+            "itemTotal" => $item['total'],
+            "subTotal" =>$subtotal
+        ]);
+    }
 }
