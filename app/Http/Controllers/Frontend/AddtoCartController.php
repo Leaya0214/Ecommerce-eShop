@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMailJob;
 use Illuminate\Http\Request;
 use App\Models\Backend\Product;
 use App\Models\Backend\Category;
@@ -52,9 +53,19 @@ class AddtoCartController extends Controller
         }
         session()->put('cart',$cart);
 
+        $email = 'leayasultana@gmail.com';
+        $emailData = [
+            'subject' => 'Welcome to our website',
+            'name' => 'Leaya Sultana',
+            'message' => 'Thank you for joining us!'
+        ];
+        SendMailJob::dispatch($email,$emailData);
+
         return response()->json([
             'status' => "success"
         ]);
+
+
     }
     
     public function showcartitems(){
