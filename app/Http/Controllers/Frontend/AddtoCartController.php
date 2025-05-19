@@ -59,7 +59,7 @@ class AddtoCartController extends Controller
             'name' => 'Leaya Sultana',
             'message' => 'Thank you for joining us!'
         ];
-        SendMailJob::dispatch($email,$emailData);
+        // SendMailJob::dispatch($email,$emailData);
 
         return response()->json([
             'status' => "success"
@@ -127,4 +127,54 @@ class AddtoCartController extends Controller
             "subTotal" =>$subtotal
         ]);
     }
+
+
+        public function applyCoupon(Request $request)
+        {
+            $couponCode = $request->input('coupon_code');
+            $coupon = Cupon::where('cupon_code', $couponCode)->where('status', 1)->first();
+
+            if (!$coupon) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Invalid or expired coupon.'
+                ]);
+            }
+
+            $cart = session()->get('cart', []);
+            if (empty($cart)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Cart is empty.'
+                ]);
+            }
+
+            $discountAmount = 0;
+            $subtotal = 0;
+
+            foreach ($cart as $key => $item) {
+                $subtotal += $item['quantity'] * $item['price'];
+            }
+
+            if ($coupon->discount_type == 'percent') {
+                $discountAmount = ($subtotal * $coupon->discount) / 100;
+            } else {
+                $discountAmount = $coupon->discount;
+            }
+
+            session()->put('cart_discount', [
+                'code' => $coupon->cupon_code,
+                'amount' => $discountAmount
+            ]);
+
+            $total = $subtotal - $discountAmount;
+
+            return response()->json([
+                'status' => 'success',
+                'discount' => $discountAmount,
+                'total' => $total,
+                'coupon' => $coupon->cupon_code
+            ]);
+        }
+    
 }

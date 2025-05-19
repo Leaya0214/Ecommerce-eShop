@@ -52,6 +52,7 @@ Route::get('/removeitem/{id}',[AddtoCartController::class,'removeitem']);
 Route::get('/viewcart',[AddtoCartController::class,'viewcart'])->name("viewcart");
 Route::get('/coupon/{coupon}',[AddtoCartController::class,'coupon']);
 Route::post('/update-cart',[AddtoCartController::class,'updateCart'])->name('update.cart');
+Route::post('/coupon-apply',[AddtoCartController::class,'applyCoupon'])->name('coupon.apply');
 
 
 Route::get('/dashboard',[DashboardController::class,'dashboard'])->middleware(['auth'])->name('dashboard');

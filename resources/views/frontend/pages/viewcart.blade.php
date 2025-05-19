@@ -91,15 +91,13 @@
                             <span>Delivery Charge</span>
                             <span id="delivery-charge">৳ 0</span>
                         </li>
-                        @if(session('discount'))
                         <li>
-                            <span>Discount ({{ session('coupon_code') }})</span>
-                            <span>-৳{{ number_format(session('discount'), 2) }}</span>
+                            <span>Discount</span>
+                            <span id="discount">৳</span>
                         </li>
-                        @endif
                         <li>
                             <span>Order Total</span>
-                            <span class="total_price">৳{{ number_format($subtotal - (session('discount') ?? 0), 2) }}</span>
+                            <span class="total_price">৳{{ number_format($subtotal - (session('cart_discount')->amount ?? 0), 2) }}</span>
                         </li>
                     </ul>
                 </div>
@@ -112,7 +110,7 @@
                         @csrf --}}
                         <div class="coupon_form form_item mb-0">
                             <input type="text" name="coupon_code" class="txtcoupon" placeholder="Coupon Code..." required>
-                            <button type="submit" class="btn btn-dark">Apply Coupon</button>
+                            <button type="button" id="coupon-btn" class="btn btn-dark">Apply Coupon</button>
                             <div class="info_icon">
                                 <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
                                     title="Enter your coupon code for discounts"></i>
@@ -124,7 +122,7 @@
                 <div class="col col-lg-6">
                     <ul class="btns_group ul_li_right">
                         <li><a class="btn border_black" href="{{url('/')}}">Continue Shopping</a></li>
-                        <li><a class="btn btn_dark" href="">Proceed To Checkout</a></li>
+                        <li><a class="btn btn_dark" href="{{route('exampleHostedCheckout')}}">Proceed To Checkout</a></li>
                     </ul>
                 </div>
             </div>
@@ -150,7 +148,7 @@
         let total = subtotal + deliveryCharge;
         console.log(subtotal);
         
-        $('#delivery-charge').text(deliveryCharge);
+        $('#delivery-charge').text('৳' + deliveryCharge);
         $('.total_price').text('৳' + total);
     }
     $(document).ready(function () {
@@ -206,6 +204,33 @@
                 }
             });
         }
+    });
+
+    $('#coupon-btn').on('click',function(e){
+        e.preventDefault();
+        let couponCode =  $('.txtcoupon').val();
+          if (!couponCode) {
+            alert('Please enter a coupon code.');
+            return;
+        }
+
+        $.ajax({
+            url : '{{route("coupon.apply")}}',
+            type: 'POST',
+            data:{
+                _token:'{{csrf_token()}}',
+                coupon_code : couponCode
+            },
+            success:function(response){
+                console.log(response);
+                
+                $('#discount').text('৳' + response.discount);
+                let deliveryChargeText = $('#delivery-charge').text(); // e.g., "৳50"
+                let deliveryCharge = parseFloat(deliveryChargeText.replace('৳', '').trim());
+                let newprice  =  response.total + deliveryCharge;
+                $('.total_price').text('৳' + newprice);
+            }
+        })
     });
 </script>
 
