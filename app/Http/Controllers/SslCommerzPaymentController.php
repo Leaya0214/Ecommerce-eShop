@@ -14,9 +14,15 @@ class SslCommerzPaymentController extends Controller
         return view('frontend.pages.exampleEasycheckout');
     }
 
-    public function exampleHostedCheckout()
+    public function exampleHostedCheckout(Request $request)
     {
-        return view('frontend.pages.exampleHosted');
+        $cart = session()->get('cart');
+        $subTotal = $request->subtotal;
+        $total = $request->total_price;
+        $discount = $request->discount;
+        $delivery = $request->delivery_charge;
+        // dd($total);
+        return view('frontend.pages.exampleHosted',compact('cart','subTotal','total','discount','delivery'));
     }
 
     public function index(Request $request)
