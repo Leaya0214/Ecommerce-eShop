@@ -2,187 +2,147 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="SSLCommerz">
-    <title>Example - Hosted Checkout | SSLCommerz</title>
+    <title>Checkout - SSLCommerz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        body {
+            background-color: #f5f7fa;
         }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
+        .checkout-container {
+            max-width: 1140px;
+        }
+        .card {
+            border: none;
+            border-radius: 16px;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: none;
+        }
+        .list-group-item {
+            border: none;
+            padding: 0.75rem 1rem;
+        }
+        .total-line {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .btn-checkout {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 10px;
         }
     </style>
 </head>
-<body class="bg-light">
-<div class="container">
-    <div class="py-5 text-center">
-        <h2>Hosted Payment - SSLCommerz</h2>
-        <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. We have provided this sample form for understanding Hosted Checkout Payment with SSLCommerz.</p>
-    </div>
+<body>
 
-    <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your cart</span>
-                <span class="badge badge-secondary badge-pill">3</span>
-            </h4>
-            <ul class="list-group mb-3">
-                @foreach($cart as $data)
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                    <div>
-                        <h6 class="my-0">{{$data['name']}}</h6>
-                        {{-- <small class="text-muted">Brief description</small> --}}
+<div class="container py-5 checkout-container">
+    <div class="row g-4">
+        <!-- Billing Form -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm p-4">
+                <h4 class="mb-4"><i class="bi bi-person-circle me-2"></i>Billing Details</h4>
+                <form method="POST" action="{{ url('/pay') }}">
+                    @csrf
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="customer_name" class="form-control" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Mobile</label>
+                            <input type="text" name="customer_mobile" class="form-control" placeholder="01XXXXXXXXX" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="customer_email" class="form-control" placeholder="john@example.com" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Address Line 1</label>
+                            <input type="text" name="address" class="form-control" placeholder="House #, Road #, Area" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Address Line 2 <span class="text-muted">(Optional)</span></label>
+                            <input type="text" name="address2" class="form-control" placeholder="Apartment, suite, etc.">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">State</label>
+                            <select name="state" class="form-select" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option value="Dhaka">Dhaka</option>
+                                <option value="Chattogram">Chattogram</option>
+                                <option value="Rajshahi">Rajshahi</option>
+                                <option value="Khulna">Khulna</option>
+                                <option value="Sylhet">Sylhet</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Zip</label>
+                            <input type="text" name="zip" class="form-control" placeholder="1200" required>
+                        </div>
                     </div>
-                    <span class="text-muted">{{$data['price']}}</span>
-                </li>
-                @endforeach
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Sub Total (BDT)</span>
-                    <strong>{{$subTotal}}</strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Discount (BDT)</span>
-                    <strong>{{$discount}}</strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Delivery Charge (BDT)</span>
-                    <strong>{{$delivery}}</strong>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Total (BDT)</span>
-                    <strong>{{$total}}</strong>
-                </li>
-            </ul>
+
+                    <input type="hidden" name="amount" value="{{ $total }}">
+
+                    <div class="mt-4 text-end">
+                        <button type="submit" class="btn btn-primary btn-checkout w-100">
+                            <i class="bi bi-credit-card-2-front me-1"></i> Pay Now
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="col-md-8 order-md-1">
-            <h4 class="mb-3">Billing address</h4>
-            <form action="{{ url('/pay') }}" method="POST" class="needs-validation">
-                <input type="hidden" value="{{ csrf_token() }}" name="_token" />
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <label for="firstName">Full name</label>
-                        <input type="text" name="customer_name" class="form-control" id="customer_name" placeholder="Enter Your Name"
-                               value="" required>
-                        <div class="invalid-feedback">
-                            Valid customer name is required.
-                        </div>
-                    </div>
-                </div>
 
-                <div class="mb-3">
-                    <label for="mobile">Mobile</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">+88</span>
-                        </div>
-                        <input type="text" name="customer_mobile" class="form-control" id="mobile" placeholder="Enter Your Mobile"
-                               value="" required>
-                        <div class="invalid-feedback" style="width: 100%;">
-                            Your Mobile number is required.
-                        </div>
-                    </div>
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm p-4">
+                <h5 class="mb-4"><i class="bi bi-bag-check me-2"></i>Your Order</h5>
+                <ul class="list-group mb-3">
+                    @foreach($cart as $item)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>{{ $item['name'] }}</span>
+                            <span class="text-muted">{{ number_format($item['price'], 2) }} BDT</span>
+                        </li>
+                    @endforeach
+                    {{-- @dd($subTotal) --}}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <strong>{{ number_format((float) $subTotal) }} BDT</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Discount</span>
+                        <strong>-{{ number_format($discount, 2) }} BDT</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Delivery</span>
+                        <strong>{{ number_format($delivery, 2) }} BDT</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between total-line border-top pt-3">
+                        <span>Total</span>
+                        <span>{{ number_format((float)  $total) }} BDT</span>
+                    </li>
+                </ul>
+                <div class="alert alert-info mt-3 mb-0">
+                    <small><i class="bi bi-info-circle"></i> You will be redirected to payment page.</small>
                 </div>
-
-                <div class="mb-3">
-                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                    <input type="email" name="customer_email" class="form-control" id="email"
-                           placeholder="you@example.com" name="email" value="" required>
-                    <div class="invalid-feedback">
-                        Please enter a valid email address for shipping updates.
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St"
-                           value="" required>
-                    <div class="invalid-feedback">
-                        Please enter your shipping address.
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-                    <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment or suite" value="">
-                </div>
-
-                <div class="row">
-                    {{-- <div class="col-md-5 mb-3">
-                        <label for="country">Country</label>
-                        <select class="custom-select d-block w-100" id="country" required>
-                            <option value="">Choose...</option>
-                            <option value="Bangladesh">Bangladesh</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a valid country.
-                        </div>
-                    </div> --}}
-                    <div class="col-md-4 mb-3">
-                        <label for="state">State</label>
-                        <select class="custom-select d-block w-100" id="state" required>
-                            <option value="">Choose...</option>
-                            <option value="Dhaka">Dhaka</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please provide a valid state.
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="zip">Zip</label>
-                        <input type="text" class="form-control" id="zip" placeholder="" required>
-                        <div class="invalid-feedback">
-                            Zip code required.
-                        </div>
-                    </div>
-                </div>
-                <hr class="mb-4">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="same-address">
-                    <input type="hidden" value="1200" name="amount" id="total_amount" required/>
-                    <label class="custom-control-label" for="same-address">Shipping address is the same as my billing
-                        address</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="save-info">
-                    <label class="custom-control-label" for="save-info">Save this information for next time</label>
-                </div>
-                <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout (Hosted)</button>
-            </form>
+            </div>
         </div>
     </div>
-
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2019 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-    </footer>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

@@ -125,8 +125,8 @@
                     <ul class="btns_group ul_li_right">
                         <li><a class="btn border_black" href="{{url('/')}}">Continue Shopping</a></li>
                         <form action="{{route('exampleHostedCheckout')}}" method="GET">
-                            <input type="hidden" name="subtotal" value="{{ number_format($subtotal, 2) }}">
-                            <input type="hidden" id="total" name="total_price" value="{{ number_format($subtotal - (session('cart_discount')->amount ?? 0)) }}">
+                            <input type="hidden" name="subtotal" value="{{ $subtotal }}" required>
+                            <input type="hidden" id="total" name="total_price" value="{{ $subtotal - (session('cart_discount')->amount ?? 0) }}">
                             <input type="hidden" id="discount_price" name="discount" value="">
                             <input type="hidden" id="delivery" name="delivery_charge" value="">
                         <li><button type="submit" class="btn btn_dark" >Proceed To Checkout</button></li>
@@ -162,6 +162,7 @@
         $('#total').val(total);
     }
     $(document).ready(function () {
+    
         // Increment button click
         $('[id^="input_number_increment-"]').on('click', function () {
             const id = $(this).data('id');

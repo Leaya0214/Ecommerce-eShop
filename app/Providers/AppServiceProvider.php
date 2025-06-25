@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(\App\Services\OrderService::class);
+        $this->app->singleton(\App\Services\Payment\SSLCommerzService::class);
     }
 
     /**
