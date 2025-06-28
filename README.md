@@ -1,4 +1,6 @@
 [Ecommerce-eShop]
+
+
 🎯 Overview
 This project is a comprehensive E-commerce Platform developed to provide a seamless online shopping experience. It encompasses essential e-commerce functionalities including robust product management, an intuitive shopping cart system, streamlined order processing, and secure payment gateway integration. Built with a focus on clean architecture and user experience, this platform aims to serve as a complete solution for online retail.
 
