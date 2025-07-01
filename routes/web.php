@@ -14,7 +14,10 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\AddtoCartController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\SslCommerzPaymentController;
+use App\Models\Order;
+
 /*
 |--------------------------------------------------------------------------
 | Frontend Route
@@ -141,7 +144,6 @@ Route::group(['prefix'=>'/subcategoey'],function(){
     });
 
 
-
 // Route for Product Gallery
 Route::group(['prefix' => '/productGaleery'],function(){
     Route::get('/addProductGaleery',[ProductGalleryController::class,'add'])->name('productGallery.add');
@@ -161,3 +163,7 @@ Route::group(['prefix'=>'/cupon'],function() {
 
 Route::get('/brand',[BrandController::class,'index'])->name('brand.index');
 Route::post('/brand/store',[BrandController::class,'store'])->name('brand.store');
+
+Route::get('/order/list',[  OrderController::class,'index'])->name('orders.index');
+
+

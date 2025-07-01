@@ -100,6 +100,12 @@
           <li class="sub-item"><a href="{{route('add')}}" class="sub-link">Slider</a></li>
         </ul>
       </li>
+      <li class="br-menu-item">
+        <a href="{{ route('orders.index') }}" class="br-menu-link">
+          <i class="menu-item-icon icon ion-ios-list-outline tx-20"></i>
+          <span class="menu-item-label">Order List</span>
+        </a>
+      </li>
 
     </ul><!-- br-sideleft-menu -->
 
